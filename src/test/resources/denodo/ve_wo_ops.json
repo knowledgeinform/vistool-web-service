@@ -1,0 +1,53 @@
+{
+  "name": "ve_wo_ops",
+  "description": "Visual Enterprise Work Order Operation Objects",
+  "elements": [
+    {
+      "WONUM": "00001/1.0",
+      "SEQUENCE_NO": 10,
+      "RESOURCE_ID": "M-PROD PLANNER",
+      "SETUP_HRS": 0,
+      "RUN": 0.5,
+      "RUN_TYPE": "HRS/PC",
+      "LOAD_SIZE_QTY": null,
+      "RUN_HRS": 0.5,
+      "MOVE_HRS": 1,
+      "COMPLETED_QTY": 1,
+      "ACT_SETUP_HRS": 0,
+      "ACT_RUN_HRS": 0.5,
+      "CLOSE_DATE": "2011-09-01",
+      "OPERATION_TYPE": "PLANNING-M",
+      "OPERATIONASSIGNEE": null,
+      "EVWPMS": null,
+      "USER_10": null,
+      "SETUP_COMPLETED": "Y",
+      "STATUS": "C",
+      "WORKORDER_BASE_ID": "00001",
+      "WORKORDER_LOT_ID": "1",
+      "WORKORDER_SPLIT_ID": "0",
+      "WORKORDER_SUB_ID": "0",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops/00001%2F1.0,10?$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops/WorkOrder",
+          "href": "../ve_wo?$filter=%22WONUM%22%3D'00001/1.0'&$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops/Equipment",
+          "href": "../ve_wo_ops_equipment?$filter=%22WONUM%22%3D'00001/1.0'+and+%22OPERATION_SEQ_NO%22%3D10&$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops/LaborTickets",
+          "href": "../ve_wo_ops_labor?$filter=%22WONUM%22%3D'00001/1.0'&$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops/Materials",
+          "href": "../ve_wo_ops_material?$filter=%22OPERATION_SEQ_NO%22%3D10&$format=json"
+        }
+      ]
+    }
+  ]
+}

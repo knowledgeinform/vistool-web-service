@@ -1,0 +1,46 @@
+{
+  "name": "ve_wo",
+  "description": "Visual Enterprise Work Order Objects",
+  "elements": [
+    {
+      "WONUM": "00001/1.0",
+      "PART_ID": null,
+      "CREATE_DATE": "2011-08-25",
+      "STATUS": "C",
+      "DESCRIPTION": "FP-11164-VIBE PLATE-MS",
+      "CUSTOMER": "80790, ALVAREZ, BENJAMIN B",
+      "PLANNER": "89039,BARLEY,LANCE",
+      "WA": "11164",
+      "SERIALNUM": null,
+      "CHARGEGRP": "TEM-1",
+      "WOASSIGNEE": null,
+      "HWLEVEL": "1",
+      "ORIGWO": null,
+      "TIMESTAMP": null,
+      "WBS_CODE": "1WB",
+      "WBS_PROJECT": "N",
+      "BASE_ID": "00001",
+      "LOT_ID": "1",
+      "SPLIT_ID": "0",
+      "SUB_ID": "0",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo/00001%2F1.0?$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo/Parts",
+          "href": "../ve_parts?$filter=%22ID%22%3Dnull&$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo/LaborTotal",
+          "href": "../ve_wo_labor_totals?$filter=%22WONUM%22%3D'00001/1.0'&$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo/Operations",
+          "href": "../ve_wo_ops?$filter=%22WONUM%22%3D'00001/1.0'&$format=json"
+        }
+      ]
+    }
+  ]
+}

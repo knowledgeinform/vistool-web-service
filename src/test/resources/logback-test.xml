@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <logger name="org.springframework" level="OFF"/>
+    <logger name="org.springframework.core " level="off" />
+    <logger name="org.springframework.beans" level="off" />
+    <logger name="org.springframework.context" level="off" />
+    <logger name="org.springframework.transaction" level="off" />
+    <logger name="org.springframework.web" level="off" />
+    <logger name="org.hibernate" level="off" />
+    <logger name="com.zaxxer.hikari" level="off" />
+    <logger name="org.springframework.test" level="error" />
+</configuration>

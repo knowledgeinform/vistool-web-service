@@ -1,0 +1,36 @@
+{
+  "name": "ve_wo_ops_labor",
+  "description": "Visual Enterprise Work Order Operation Labor Records",
+  "elements": [
+    {
+      "WONUM": "00001/1.0",
+      "OPERATION_SEQ_NO": 10,
+      "HOURS_WORKED": 0.5,
+      "TRANSACTION_ID": 21,
+      "EMPLOYEE_ID": "00103031",
+      "DEPARTMENT_ID": "TEP",
+      "RESOURCE_ID": "M-PROD PLANNER",
+      "GOOD_QTY": 0,
+      "BAD_QTY": 0,
+      "TRANSACTION_DATE": "2011-08-25",
+      "DESCRIPTION": "Labor Recorded By MDC Application",
+      "USER_ID": "BARLELC1",
+      "SETUP_COMPLETED": "Y",
+      "TYPE": "R",
+      "WORKORDER_BASE_ID": "00001",
+      "WORKORDER_LOT_ID": "1",
+      "WORKORDER_SPLIT_ID": "0",
+      "WORKORDER_SUB_ID": "0",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops_labor/21?$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops_labor/Operations",
+          "href": "../ve_wo_ops?$filter=%22WONUM%22%3D'00001/1.0'&$format=json"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+version: '3'
+services:
+  vistool-ws-dev:
+    depends_on:
+      - vistool-db-updater
+    env_file:
+      - vistool_secret.env
+      - .env
+    environment:
+      - JPDA_ADDRESS=8000
+      - JPDA_TRANSPORT=dt_socket
+      - JPDA_OPTS=-agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n
+      - TZ=America/New_York
+    build:
+      context: ../
+      dockerfile: docker/ws-dev.Dockerfile
+    volumes:
+      - ~/.m2:/.m2
+    ports:
+      - "8080:8080"
+      - "8000:8000"
+      - "8443:8443"
+  vistool-db:
+    build:
+      context: ../
+      dockerfile: docker/db.Dockerfile
+      args:
+        VISTOOL_DATABASE: ${VISTOOL_DATABASE}
+        VISTOOL_DATABASE_USER: ${VISTOOL_DATABASE_USER}
+        VISTOOL_DATABASE_PASSWORD: ${VISTOOL_DATABASE_PASSWORD}
+        MYSQL_ROOT_PWD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+  vistool-db-updater:
+    hostname: vistool-db-updater
+    depends_on:
+      - vistool-db
+    env_file: .env
+    build:
+      context: ../
+      dockerfile: docker/db-updater.Dockerfile

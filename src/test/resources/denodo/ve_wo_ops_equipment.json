@@ -1,0 +1,34 @@
+{
+  "name": "ve_wo_ops_equipment",
+  "description": "Visual Enterprise Work Order Equipment Recorded on Operations",
+  "elements": [
+    {
+      "WONUM": "00005/1.0",
+      "OPERATION_SEQ_NO": 150,
+      "PIECE_NO": 40,
+      "PART_ID": null,
+      "STATUS": "C",
+      "QTY_PER": 0,
+      "EQUIP_DESC": "Scale",
+      "EQUIP_ID": "210746",
+      "EQUIP_DATE_USED": "09/08/2011",
+      "EQUIP_DATE_CALIBRATED": "02/25/2012",
+      "USER_5": null,
+      "TIMESTAMP": "LEESECB1 09/20/2011 10:45:10 AM",
+      "WORKORDER_BASE_ID": "00005",
+      "WORKORDER_LOT_ID": "1",
+      "WORKORDER_SPLIT_ID": "0",
+      "WORKORDER_SUB_ID": "0",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops_equipment/00005%2F1.0,150,40?$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops_equipment/Operation",
+          "href": "../ve_wo_ops?$filter=%22WONUM%22%3D'00005/1.0'+and+%22SEQUENCE_NO%22%3D150&$format=json"
+        }
+      ]
+    }
+  ]
+}

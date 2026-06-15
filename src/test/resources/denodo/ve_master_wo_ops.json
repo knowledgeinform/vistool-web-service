@@ -1,0 +1,44 @@
+{
+  "name": "ve_master_wo_ops",
+  "description": "Visual Enterprise Master Work Order Operations",
+  "elements": [
+    {
+      "WONUM": "#9/1.0",
+      "SEQUENCE_NO": 60,
+      "RESOURCE_ID": "PLAN-MATL",
+      "SETUP_HRS": 4,
+      "RUN": 0.3,
+      "RUN_TYPE": "HRS/LOAD",
+      "LOAD_SIZE_QTY": 1000,
+      "RUN_HRS": 0.3,
+      "MOVE_HRS": 0,
+      "COMPLETED_QTY": 0,
+      "ACT_SETUP_HRS": 0,
+      "ACT_RUN_HRS": 0,
+      "CLOSE_DATE": null,
+      "OPERATION_TYPE": "PLANNING-MAT-SE",
+      "OPERATIONASSIGNEE": null,
+      "USER_2": null,
+      "EVWPMS": null,
+      "USER_4": null,
+      "USER_5": null,
+      "USER_6": null,
+      "USER_7": null,
+      "USER_8": null,
+      "USER_9": null,
+      "TIMESTAMP": "SANFOKB1, 3/10/2017",
+      "SETUP_COMPLETED": "N",
+      "STATUS": "U",
+      "WORKORDER_BASE_ID": "#9",
+      "WORKORDER_LOT_ID": "1",
+      "WORKORDER_SPLIT_ID": "0",
+      "WORKORDER_SUB_ID": "0",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_master_wo_ops/%239%2F1.0,60?$format=json"
+        }
+      ]
+    }
+  ]
+}

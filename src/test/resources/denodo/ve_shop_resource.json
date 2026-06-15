@@ -1,0 +1,35 @@
+{
+  "name": "ve_shop_resource",
+  "description": "VE Shop Resource Information",
+  "elements": [
+    {
+      "id": "P-TASK",
+      "description": "PROJECT TASK",
+      "shift_1_capacity": 0,
+      "status_rank": 0,
+      "wbs_resource_type": "Y",
+      "cost_category_id": "LABOR",
+      "department_id": "SEH",
+      "user_1": "SD POWER AND PARTS",
+      "user_2": "SEH",
+      "user_3": null,
+      "user_4": null,
+      "user_5": null,
+      "user_6": null,
+      "user_7": null,
+      "user_8": null,
+      "user_9": null,
+      "user_10": "SANFOKB1, 9/29/2017",
+      "udf_layout_id": "RESMNT",
+      "status": null,
+      "schedule_normally": "N",
+      "type": "W",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_shop_resource/P-TASK?$format=json"
+        }
+      ]
+    }
+  ]
+}

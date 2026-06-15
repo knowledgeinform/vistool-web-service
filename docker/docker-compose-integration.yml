@@ -1,0 +1,47 @@
+version: '3'
+services:
+  vistool-db-test:
+    hostname: vistool-db-test
+    build:
+      context: ../
+      dockerfile: docker/db.Dockerfile
+      args:
+        VISTOOL_DATABASE: ${VISTOOL_DATABASE}
+        VISTOOL_DATABASE_USER: ${VISTOOL_DATABASE_USER}
+        VISTOOL_DATABASE_PASSWORD: ${VISTOOL_DATABASE_PASSWORD}
+        MYSQL_ROOT_PWD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    networks:
+      - test-network
+  vistool-db-updater-test:
+    hostname: vistool-db-updater-test
+    depends_on:
+      - vistool-db-test
+    build:
+      context: ../
+      dockerfile: docker/db-updater.Dockerfile
+      args:
+        VISTOOL_DATABASE_HOST: vistool-db-test
+        VISTOOL_DATABASE_USER: ${VISTOOL_DATABASE_USER}
+        VISTOOL_DATABASE_PASSWORD: ${VISTOOL_DATABASE_PASSWORD}
+        VISTOOL_DATABASE_PORT: ${VISTOOL_DATABASE_PORT}
+    networks:
+      - test-network
+  vistool-integration-tests:
+    depends_on:
+      - vistool-db-updater-test
+    env_file:
+      - vistool_secret.env
+      - .env
+    build:
+      context: ../
+      dockerfile: docker/integration-tests.Dockerfile
+    environment:
+      VISTOOL_DATABASE_HOST: vistool-db-test
+    volumes:
+      - ~/.m2:/.m2
+    networks:
+      - test-network
+networks:
+  test-network:

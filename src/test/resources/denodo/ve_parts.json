@@ -1,0 +1,58 @@
+{
+  "name": "ve_parts",
+  "description": "Visual Enterprise Part Objects",
+  "elements": [
+    {
+      "ID": "#11",
+      "DESCRIPTION": "EPOXY,CATALYST",
+      "EXTENDED_DESC": "EPOXY,CATALYST",
+      "STOCK_UM": "EA",
+      "PRODUCT_CODE": "ZPURC-MECH",
+      "COMMODITY_CODE": "POLYMERIC",
+      "PLANNING_LEADTIME": 5,
+      "MFG_NAME": null,
+      "MFG_PART_ID": null,
+      "QTY_ON_HAND": 1,
+      "QTY_AVAILABLE_ISS": 1,
+      "QTY_AVAILABLE_MRP": 1,
+      "QTY_ON_ORDER": 0,
+      "QTY_IN_DEMAND": 0,
+      "SAFETY_STOCK_QTY": null,
+      "MINIMUM_ORDER_QTY": null,
+      "MAXIMUM_ORDER_QTY": null,
+      "STATUS": "A",
+      "FABRICATED": "Y",
+      "PURCHASED": "Y",
+      "CREATE_DATE": "2019-03-06",
+      "MODIFY_DATE": "2020-08-03",
+      "TIMESTAMP": "GARDNMW1, 3/6/2019",
+      "VALUE_SIZE": "1LB",
+      "GPN": "CATALYST",
+      "WEIGHT": 0,
+      "WEIGHT_UM": null,
+      "DRAWING_ID": "NEED 56C OR 2850FT",
+      "MRP_REQUIRED": "Y",
+      "MRP_EXCEPTIONS": null,
+      "PLANNER_USER_ID": "GARDNMW1",
+      "BUYER_USER_ID": "GARDNMW1",
+      "GRADE": "1",
+      "CONFIG_LVL": null,
+      "ATTRIBUTES": "FOR ABLESTIK-285",
+      "LEAD_ENG": null,
+      "ESD_CLASS": null,
+      "TAPE_WIDTH": null,
+      "NMFC_CODE_ID": "FORMULA",
+      "PACKAGE_TYPE": null,
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_parts/%2311?$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_parts/WorkOrders",
+          "href": "../ve_wo?$filter=%22PART_ID%22%3D'%2311'&$format=json"
+        }
+      ]
+    }
+  ]
+}

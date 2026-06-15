@@ -1,0 +1,61 @@
+package edu.jhuapl.sd.sig.vistool.vistoolwebservice.constants.denodo;
+
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+public class VmSysWorkAuthDetailChangeHistoryVistoolConstants {
+    public final String WORKAUTH_HEADER_CREATE_DATE = "workauth_header_create_date";
+    public final String WORKAUTH_HEADER_CUSTOMER = "workauth_header_customer";
+    public final String WORKAUTH_HEADER_DEPARTMENT_ID = "workauth_header_dept_id";
+    public final String WORKAUTH_HEADER_ID = "workauth_header_id";
+    public final String WORKAUTH_HEADER_LAST_MODIFIED = "workauth_header_last_modified";
+    public final String WORKAUTH_HEADER_ORIGINATOR = "workauth_header_originator";
+    public final String WORKAUTH_HEADER_STATUS = "workauth_header_status";
+    public final String WORKAUTH_HEADER_SUBMIT_DATE = "workauth_header_submit_date";
+    public final String WORKAUTH_HEADER_TA = "workauth_header_ta";
+    public final String WORKAUTH_HEADER_WORK_AREA_ID = "workauth_header_workarea_id";
+    public final String WORKAUTH_HEADER_WORK_AREA_ID_NEW = "workauth_header_workarea_id_new";
+    public final String WORKAUTH_DETAIL_APL_GROUPS_ID = "workauth_detail_aplgroups_id";
+    public final String WORKAUTH_DETAIL_COMMENTS = "workauth_detail_comments";
+    public final String WORKAUTH_DETAIL_CREATE_DATE = "workauth_detail_create_date";
+    public final String WORKAUTH_DETAIL_DESCRIPTION = "workauth_detail_descr";
+    public final String WORKAUTH_DETAIL_FLOW = "workauth_detail_flow";
+    public final String WORKAUTH_DETAIL_IN_PLM = "workauth_detail_inplm";
+    public final String WORKAUTH_DETAIL_LAST_MODIFIED = "workauth_detail_last_modified";
+    public final String WORKAUTH_DETAIL_LINE_ITEM = "workauth_detail_line_item";
+    public final String WORKAUTH_DETAIL_ORIGINAL_WORK_ORDER = "workauth_detail_orig_wo_num";
+    public final String WORKAUTH_DETAIL_PARENT_LOT = "workauth_detail_parent_lot";
+    public final String WORKAUTH_DETAIL_PARENT_OPERATION = "workauth_detail_parent_op";
+    public final String WORKAUTH_DETAIL_PARENT_SPLIT_ID = "workauth_detail_parent_split";
+    public final String WORKAUTH_DETAIL_PARENT_WORK_ORDER = "workauth_detail_parent_wo_num";
+    public final String WORKAUTH_DETAIL_PART_ID = "workauth_detail_part_id";
+    public final String WORKAUTH_DETAIL_QUANTITY = "workauth_detail_quantity";
+    public final String WORKAUTH_DETAIL_REDD_FLOW_ID = "workauth_detail_redd_flow";
+    public final String WORKAUTH_DETAIL_REVISION = "workauth_detail_revision";
+    public final String WORKAUTH_DETAIL_SPLIT_ID = "workauth_detail_split_id";
+    public final String WORKAUTH_DETAIL_TA = "workauth_detail_ta";
+    public final String WORKAUTH_DETAIL_USING_SERIAL_NUMBER = "workauth_detail_using_sn";
+    public final String WORKAUTH_DETAIL_WORK_AUTHORIZATION_FLOW_ID = "workauth_detail_waflow_id";
+    public final String WORKAUTH_DETAIL_WANT_DATE = "workauth_detail_want_date";
+    public final String WORKAUTH_DETAIL_WORK_AUTHORIZATION_ID = "workauth_detail_workauth_id";
+    public final String WORKAUTH_DETAIL_SUBMIT_DATE = "workauth_detail_submit_date";
+    public final String CHANGE_LINE_COMMENT = "change_line_comment";
+    public final String CHANGE_LINE_HEADER_ID = "change_line_header_id";
+    public final String CHANGE_LINE_FLOW = "change_line_flow";
+    public final String CHANGE_HEADER_ID = "change_header_id";
+    public final String CHANGE_HEADER_STOP_ORDER = "change_header_stoporder";
+    public final String CHANGE_LINE_LINE_ITEM_NUMBER = "change_line_item_num";
+    public final String CHANGE_LINE_ID = "change_line_id";
+    public final String CHANGE_LINE_STOP_ORDER = "change_line_stoporder";
+    public final String CHANGE_LINE_NEED_DATE = "change_line_need_date";
+    public final String CHANGE_LINE_PART_ID = "change_line_part_id";
+    public final String CHANGE_LINE_PART_REVISION = "change_line_part_revision";
+    public final String CHANGE_LINE_QUANTITY = "change_line_quantity";
+    public final String CHANGE_REQUESTOR = "change_header_requestor";
+    public final String CHANGE_LINE_SPLIT_ID = "change_line_split_id";
+    public final String CHANGE_SUBMIT_DATE = "change_header_submit_date";
+    public final String CHANGE_LINE_SUB_ID = "change_line_sub_id";
+    public final String CHANGE_LINE_TASK_AUTHORIZATION = "change_line_ta";
+    public final String CHANGE_LINE_WORK_AREA_NAME = "change_line_workarea_name";
+    public final String CHANGE_WORK_AUTHORIZATION_ID = "change_header_workauth_id";
+}

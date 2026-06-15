@@ -1,0 +1,21 @@
+{
+  "name": "ve_wo_labor_totals",
+  "description": "Total labor recorded for a given work order on all operations summed.",
+  "elements": [
+    {
+      "WONUM": "Y29X1/0.0",
+      "LABOR_TOTAL": 143.5,
+      "TYPE": "S",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_labor_totals/Y29X1%2F0.0?$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_labor_totals/WorkOrder",
+          "href": "../ve_wo?$filter=%22WONUM%22%3D'Y29X1/0.0'&$format=json"
+        }
+      ]
+    }
+  ]
+}

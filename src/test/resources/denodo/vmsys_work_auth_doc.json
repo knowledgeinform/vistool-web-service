@@ -1,0 +1,21 @@
+{
+  "name": "vmsys_workauth_doc",
+  "description": "Documents linked to the Work Authorization application",
+  "elements": [
+    {
+      "id": 1,
+      "workauth_id": "000003",
+      "line_item": "1",
+      "split_id": "0",
+      "document_name": "DEV-BOARD-GERBER[572013124243713].zip",
+      "document_path": "\\prod\\WA-000003-1-0-0\\",
+      "doc_type": null,
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/vmsys_workauth_doc/1?$format=json"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "ve_special_parts",
+  "description": "Parts identified as needing \"Special Processing\" or ESD Zero Class",
+  "elements": [
+    {
+      "ID": "ERJ-1GEF8201C-",
+      "Description": "ERJ-1GEF",
+      "Stock_UM": "EA",
+      "ValueSize": null,
+      "GPN": "ERJ-1GE",
+      "Grade": "9",
+      "ConfigLevel": "2",
+      "Attributes": "Sn,SMT,ESD0",
+      "LeadEng": null,
+      "ExtendPartDesc": "RESISTOR-CHIP",
+      "ESDClass": "0",
+      "TapeWidth": null,
+      "Timestamp": "MIRANCM1, 2/28/2018",
+      "Fabricated": "Y",
+      "Purchased": "N",
+      "Create_Date": "2017-12-01",
+      "Modify_Date": "2021-05-22",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_special_parts/ERJ-1GEF8201C-?$format=json"
+        }
+      ]
+    }
+  ]
+}

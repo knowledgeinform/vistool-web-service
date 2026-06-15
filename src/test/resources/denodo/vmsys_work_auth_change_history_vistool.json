@@ -1,0 +1,62 @@
+{
+  "name": "vmsys_workauth_change_history_vistool",
+  "description": "Work Authorization Change History Vistool",
+  "elements": [
+    {
+      "workauth_header_id": "000005",
+      "workauth_header_originator": "00104592",
+      "workauth_header_customer": "00095137",
+      "workauth_header_ta": "YGTQAQXX",
+      "workauth_header_dept_id": "REDD",
+      "workauth_header_workarea_id": "019",
+      "workauth_header_status": "T",
+      "workauth_header_submit_date": "2013-05-13T00:00:00",
+      "workauth_header_create_date": "2013-05-13T00:00:00",
+      "workauth_header_last_modified": "2013-05-13T07:59:09",
+      "workauth_detail_workauth_id": "000005",
+      "workauth_detail_line_item": "1",
+      "workauth_detail_split_id": "0",
+      "workauth_detail_ta": "YGTQAQXX",
+      "workauth_detail_part_id": "IPC-A-43RIGID",
+      "workauth_detail_quantity": 4,
+      "workauth_detail_want_date": "2013-09-30T00:00:00",
+      "workauth_detail_descr": "IPC MIL-SPEC",
+      "workauth_detail_comments": null,
+      "workauth_detail_inplm": "N",
+      "workauth_detail_flow": null,
+      "workauth_detail_create_date": "2013-05-13T00:00:00",
+      "workauth_detail_last_modified": "2014-04-23T17:08:38",
+      "workauth_detail_revision": "-",
+      "workauth_detail_using_sn": null,
+      "workauth_detail_redd_flow": null,
+      "workauth_detail_aplgroups_id": null,
+      "workauth_detail_waflow_id": null,
+      "workauth_detail_orig_wo_num": null,
+      "workauth_detail_parent_wo_num": null,
+      "workauth_detail_parent_lot": null,
+      "workauth_detail_parent_split": null,
+      "workauth_detail_parent_op": null,
+      "change_line_comment": "minor change to the drawing",
+      "change_header_id": 121,
+      "change_line_header_id": 121,
+      "change_header_stoporder": 0,
+      "change_line_item_num": "2",
+      "change_line_id": 122,
+      "change_line_stoporder": 0,
+      "change_line_quantity": null,
+      "change_header_requestor": "CHIANS1",
+      "change_line_split_id": "0",
+      "change_header_submit_date": "2015-09-02T15:00:20",
+      "change_line_sub_id": "0",
+      "change_line_ta": null,
+      "change_line_workarea_name": "REDD Electrical Assembly",
+      "change_header_workauth_id": "007274"
+    }
+  ],
+  "links": [
+    {
+      "rel": "string",
+      "href": "https://denodo.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/vmsys_workauth_change_history?HEADER_ID=121&$format=json"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "ve_users",
+  "description": "List of current VE users with the associated employment information",
+  "elements": [
+    {
+      "username": "ABRAHJV1",
+      "person_id": "00109490",
+      "preferred_name": "Abraham,Jibu V.",
+      "dept_id": "AMDS",
+      "group_id": "A1C",
+      "labphone1_ext": "22361",
+      "email_address": "Jibu.Abraham@jhuapl.edu",
+      "office": "1-E241",
+      "prefix_name": "Mr.",
+      "last_name": "Abraham",
+      "first_name": "Jibu",
+      "middle_name": "Varghese",
+      "person_status_code": "A",
+      "person_substatus_code": "A",
+      "last_update_date": "2020-07-29",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_users/00109490?$format=json"
+        }
+      ]
+    }
+  ]
+}

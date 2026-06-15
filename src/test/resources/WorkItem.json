@@ -1,0 +1,48 @@
+{
+    "id": 1,
+    "version": 1,
+    "parentLineItem": {
+        "id": 1,
+        "version": 1,
+        "workAuthorizationNumber": "WA-1",
+        "lineItemNumber": "LI-1",
+        "quantity": 10
+    },
+    "linkedWorkOrder": "WO-1",
+    "serialNumber": "SN-1",
+    "quantity": 10,
+    "quantityComplete": 3,
+    "balance": 7,
+    "expedite": true,
+    "subsystem": "subsystem",
+    "pickAndPlace": {
+        "pickAndPlaceBool": false,
+        "loadingPriorities": "loaded",
+        "sizeAndMagazines": "sizeAndMagazines",
+        "pickAndPlaceNotes": "pickAndPlaceNotes",
+        "targetStartDate": "01/01/2021"
+    },
+    "productionPlanning": {
+        "productionPlanning": true,
+        "productionPlanningNotes": "productionPlanningNotes",
+        "actionItems": "actionItems"
+    },
+    "status": "IN_PROCESS",
+    "statusComments": "statusComments",
+    "manufacturingEngineer": "manufacturingEngineer",
+    "currentTechnician": "currentTechnician",
+    "programPriority": 2,
+    "technicianPriority": 4,
+    "polymericsPriority": 6,
+    "inspectionPriority": 8,
+    "dateComplete": "02/02/2021",
+    "kitPartDueDate": "03/03/2021",
+    "estimateToComplete": "04/04/2021",
+    "estimateToTest": "05/05/2021",
+    "estimateReturnToAssembly": "06/06/2021",
+    "eeeKit": "N",
+    "mechKit": "Y",
+    "location": "location",
+    "comments": "comments",
+    "workOrderExists": "Y"
+}

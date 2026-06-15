@@ -1,0 +1,11 @@
+{
+  "name": "vmsys_data_dictionary",
+  "description": "string",
+  "elements": [],
+  "links": [
+    {
+      "rel": "string",
+      "href": "string"
+    }
+  ]
+}

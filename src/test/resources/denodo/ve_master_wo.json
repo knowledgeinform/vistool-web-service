@@ -1,0 +1,34 @@
+{
+  "name": "ve_master_wo",
+  "description": "Visual Enterprise Work Order Masters",
+  "elements": [
+    {
+      "WONUM": "#9/1.0",
+      "PART_ID": "#9",
+      "CREATE_DATE": "2017-03-17",
+      "STATUS": "U",
+      "DESCRIPTION": "SEH-TESTING-3-REV.6",
+      "CUSTOMER": "89078, LANGLEY T",
+      "PLANNER": "89410, GARDNER M",
+      "WA": null,
+      "SERIALNUM": null,
+      "CHARGEGRP": "SEH",
+      "WOASSIGNEE": "SEH",
+      "HWLEVEL": "Z",
+      "ORIGWO": null,
+      "TIMESTAMP": "GARDNMW1, 12/11/2017",
+      "WBS_CODE": null,
+      "WBS_PROJECT": "N",
+      "BASE_ID": "#9",
+      "LOT_ID": "1",
+      "SPLIT_ID": "0",
+      "SUB_ID": "0",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_master_wo/%239%2F1.0?$format=json"
+        }
+      ]
+    }
+  ]
+}

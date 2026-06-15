@@ -1,0 +1,33 @@
+{
+  "name": "ve_wo_ops_material",
+  "description": "Visual Enterprise Work Order Materials Recorded on Operations",
+  "elements": [
+    {
+      "WONUM": "00005/1.0",
+      "OPERATION_SEQ_NO": 50,
+      "PIECE_NO": 10,
+      "PART_ID": null,
+      "STATUS": "C",
+      "QTY_PER": 0,
+      "MATERIAL_DESC": "film adhesive",
+      "MATERIAL_ID": "0287A3",
+      "MATERIAL_DATE_USED": "12/02/2011",
+      "MATERIAL_SERIAL": "038356",
+      "TIMESTAMP": "SETZLWR1 09/20/2011 02:45:10 PM",
+      "WORKORDER_BASE_ID": "00005",
+      "WORKORDER_LOT_ID": "1",
+      "WORKORDER_SPLIT_ID": "0",
+      "WORKORDER_SUB_ID": "0",
+      "links": [
+        {
+          "rel": "self",
+          "href": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops_material/00005%2F1.0,50,10?$format=json"
+        },
+        {
+          "rel": "https://denododev.jhuapl.edu:9443/server/APL_Engineering/MfgERP/views/ve_wo_ops_material/Operation",
+          "href": "../ve_wo_ops?$filter=%22SEQUENCE_NO%22%3D50&$format=json"
+        }
+      ]
+    }
+  ]
+}
