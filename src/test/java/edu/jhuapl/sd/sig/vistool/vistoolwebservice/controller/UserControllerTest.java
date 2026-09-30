@@ -56,7 +56,11 @@ public class UserControllerTest {
     @Test
     @WithMockUser
     public void testGetUserInformation() throws Exception {
-        VistoolUserDTO expected = VistoolTestUtilities.setCurrentUserContextTo("USER", VistoolUserRole.VIEWER);
+        VistoolUserDTO expected = VistoolTestUtilities.setCurrentUserContextTo(
+            "USER",
+            VistoolUserRole.VIEWER.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.get("/user"))
             .andExpect(status().isOk())
             .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -65,7 +69,8 @@ public class UserControllerTest {
     @Test
     @WithMockUser
     public void testGetUserInformationNotFound() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user")).andExpect(status().isNotFound());
+        mockMvc.perform(MockMvcRequestBuilders.get("/user"))
+            .andExpect(status().isNotFound());
     }
 
     @Test
@@ -74,10 +79,15 @@ public class UserControllerTest {
         DimHRPerson hrPersonAll = createDimHrPerson("USERNAME", "ID");
         dimHrPersonRepository.save(hrPersonAll);
 
-        VistoolUserRoleAssignment vistoolUserRoleAssignment = new VistoolUserRoleAssignment("ID", VistoolUserRole.VIEWER.toString());
+        VistoolUserRoleAssignment vistoolUserRoleAssignment =
+            new VistoolUserRoleAssignment("ID", VistoolUserRole.VIEWER.toString());
         vistoolUserRoleAssignmentRepository.save(vistoolUserRoleAssignment);
 
-        VistoolUserDTO expected = new VistoolUserDTO(hrPersonAll, VistoolUserRole.VIEWER);
+        VistoolUserDTO expected = new VistoolUserDTO(
+            hrPersonAll,
+            VistoolUserRole.VIEWER.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.get("/user/USERNAME"))
             .andExpect(status().isOk())
             .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -89,34 +99,51 @@ public class UserControllerTest {
         DimHRPerson hrPersonAll = createDimHrPerson("USERNAME", "ID");
         dimHrPersonRepository.save(hrPersonAll);
 
-        VistoolUserDTO expected = new VistoolUserDTO(hrPersonAll, VistoolUserRole.VIEWER);
+        VistoolUserDTO expected = new VistoolUserDTO(
+            hrPersonAll,
+            VistoolUserRole.VIEWER.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.get("/user/USERNAME"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     }
 
     @Test
     @WithMockUser
     public void testGetUserByUsernameNotFound() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/USERNAME")).andExpect(status().isNotFound());
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/USERNAME"))
+            .andExpect(status().isNotFound());
     }
 
     @Test
     @WithMockUser
     public void testGetAllUsersForRole() throws Exception {
-        vistoolUserRoleAssignmentService.changeUserRole("VIEWER_ONE", VistoolUserRole.VIEWER);
-        vistoolUserRoleAssignmentService.changeUserRole("VIEWER_TWO", VistoolUserRole.VIEWER);
-        vistoolUserRoleAssignmentService.changeUserRole("COMMENTER", VistoolUserRole.COMMENTER);
+        vistoolUserRoleAssignmentService.changeUserRole(
+            "VIEWER_ONE",
+            VistoolUserRole.VIEWER.toString()
+        );
+        vistoolUserRoleAssignmentService.changeUserRole(
+            "VIEWER_TWO",
+            VistoolUserRole.VIEWER.toString()
+        );
+        vistoolUserRoleAssignmentService.changeUserRole(
+            "COMMENTER",
+            VistoolUserRole.COMMENTER.toString()
+        );
+
         List<DimHRPerson> hrPersonAllList = List.of(
             createDimHrPerson("VIEWER_ONE", "VIEWER_ONE"),
             createDimHrPerson("VIEWER_TWO", "VIEWER_TWO"),
             createDimHrPerson("COMMENTER", "COMMENTER")
         );
         dimHrPersonRepository.saveAll(hrPersonAllList);
+
         List<VistoolUserDTO> expected = List.of(
-            new VistoolUserDTO(hrPersonAllList.get(0), VistoolUserRole.VIEWER),
-            new VistoolUserDTO(hrPersonAllList.get(1), VistoolUserRole.VIEWER)
+            new VistoolUserDTO(hrPersonAllList.get(0), VistoolUserRole.VIEWER.toString()),
+            new VistoolUserDTO(hrPersonAllList.get(1), VistoolUserRole.VIEWER.toString())
         );
+
         mockMvc.perform(MockMvcRequestBuilders.get("/user/role/VIEWER"))
             .andExpect(status().isOk())
             .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -127,30 +154,47 @@ public class UserControllerTest {
     public void testAssignRolesToListOfUsers() throws Exception {
         DimHRPerson hrPersonAll = createDimHrPerson("USER", "USER");
         dimHrPersonRepository.save(hrPersonAll);
-        VistoolUserRoleAssignment vistoolUserRoleAssignment = new VistoolUserRoleAssignment("USER", VistoolUserRole.ADMIN.toString());
+
+        VistoolUserRoleAssignment vistoolUserRoleAssignment =
+            new VistoolUserRoleAssignment("USER", VistoolUserRole.ADMIN.toString());
         vistoolUserRoleAssignmentRepository.save(vistoolUserRoleAssignment);
 
-        VistoolUserDTO expectedVistoolUser = VistoolTestUtilities.setCurrentUserContextTo("USER", VistoolUserRole.ADMIN);
+        VistoolUserDTO expectedVistoolUser = VistoolTestUtilities.setCurrentUserContextTo(
+            "USER",
+            VistoolUserRole.ADMIN.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.put("/user/role")
             .with(csrf())
-            .content(objectMapper.writeValueAsString(List.of(expectedVistoolUser))).contentType(MediaType.APPLICATION_JSON))
+            .content(objectMapper.writeValueAsString(List.of(expectedVistoolUser)))
+            .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
         VistoolUserRoleAssignment expectedVistoolUserRoleAssignment =
             new VistoolUserRoleAssignment("USER", VistoolUserRole.ADMIN.toString());
+
         Optional<VistoolUserRoleAssignment> actualVistoolUserRoleAssignment =
             vistoolUserRoleAssignmentService.findOneVistoolUserRoleAssignmentByUserId("USER");
-        Assertions.assertEquals(expectedVistoolUserRoleAssignment, actualVistoolUserRoleAssignment.get());
+
+        Assertions.assertEquals(
+            expectedVistoolUserRoleAssignment,
+            actualVistoolUserRoleAssignment.get()
+        );
     }
 
     @Test
     @WithMockUser("USER")
     public void testAssignRolesToListOfUsersByNonAdmin() throws Exception {
-        VistoolUserDTO expectedVistoolUser = VistoolTestUtilities.setCurrentUserContextTo("USER", VistoolUserRole.VIEWER);
+        VistoolUserDTO expectedVistoolUser = VistoolTestUtilities.setCurrentUserContextTo(
+            "USER",
+            VistoolUserRole.VIEWER.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.put("/user/role")
-                        .with(csrf())
-                        .content(objectMapper.writeValueAsString(List.of(expectedVistoolUser))).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized());
+            .with(csrf())
+            .content(objectMapper.writeValueAsString(List.of(expectedVistoolUser)))
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isUnauthorized());
     }
 
     private DimHRPerson createDimHrPerson(String username, String personID) {

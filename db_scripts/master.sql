@@ -20,6 +20,7 @@ SOURCE data_004.sql
 SOURCE data_005.sql
 SOURCE schema_006.sql
 SOURCE schema_007.sql
+SOURCE schema_008.sql
 
 
 

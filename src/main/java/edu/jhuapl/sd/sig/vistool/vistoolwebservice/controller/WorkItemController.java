@@ -1,12 +1,14 @@
 package edu.jhuapl.sd.sig.vistool.vistoolwebservice.controller;
 
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.model.vistool.HydratedWorkItem;
+import edu.jhuapl.sd.sig.vistool.vistoolwebservice.model.vistool.VistoolUser;
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.model.vistool.WorkItem;
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.model.vistool.WorkItemBatchSaveResponse;
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.model.vistool.WorkItemSaveRequest;
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.security.SecurityUtilities;
-import edu.jhuapl.sd.sig.vistool.vistoolwebservice.service.WorkItemService;
+import edu.jhuapl.sd.sig.vistool.vistoolwebservice.service.VistoolPermissionService;
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.service.WorkItemConflictException;
+import edu.jhuapl.sd.sig.vistool.vistoolwebservice.service.WorkItemService;
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.util.VistoolUtilities;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import java.util.Optional;
 public class WorkItemController {
     @Autowired private WorkItemService workItemService;
     @Autowired private SecurityUtilities securityUtilities;
+    @Autowired private VistoolPermissionService vistoolPermissionService;
 
     @GetMapping(value = "/WorkItems", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<HydratedWorkItem>> getHydratedWorkItems() {
@@ -55,9 +58,20 @@ public class WorkItemController {
     @Transactional
     @PutMapping(value = "/WorkItems", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WorkItemBatchSaveResponse> putWorkItems(@RequestBody List<WorkItemSaveRequest> workItemSaveRequests) {
-        if (!VistoolUtilities.currentUserCanEdit(VistoolUtilities.getCurrentUser(securityUtilities))) {
+        VistoolUser currentUser = VistoolUtilities.getCurrentUser(securityUtilities);
+
+        if (currentUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+
+        for (WorkItemSaveRequest workItemSaveRequest : workItemSaveRequests) {
+            List<String> changedFields = workItemService.getChangedFieldsForSaveRequest(workItemSaveRequest);
+
+            if (!vistoolPermissionService.canEditFields(currentUser.getVistoolUserRole(), changedFields)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        }
+
         WorkItemBatchSaveResponse response = workItemService.mergeAndSaveWorkItems(workItemSaveRequests, true);
         if (!response.getConflicts().isEmpty()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
@@ -68,9 +82,18 @@ public class WorkItemController {
     @Transactional
     @PutMapping(value = "/WorkItem", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> putWorkItem(@RequestBody WorkItemSaveRequest workItemSaveRequest) {
-        if (!VistoolUtilities.currentUserCanEdit(VistoolUtilities.getCurrentUser(securityUtilities))) {
+        VistoolUser currentUser = VistoolUtilities.getCurrentUser(securityUtilities);
+
+        if (currentUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+
+        List<String> changedFields = workItemService.getChangedFieldsForSaveRequest(workItemSaveRequest);
+
+        if (!vistoolPermissionService.canEditFields(currentUser.getVistoolUserRole(), changedFields)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         try {
             WorkItem savedWorkItem = workItemService.mergeAndSaveWorkItem(
                 workItemSaveRequest.getWorkItem(),

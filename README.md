@@ -1,6 +1,9 @@
 # VisTool-Web-Service
 Vistool-Web-Service is a web API using Spring Boot. 
 
+## Copyright
+© 2021 The Johns Hopkins University Applied Physics Laboratory LLC.  All Rights Reserved.
+
 ## Installation/Version Control Instructions
 Vistool-Web-Service uses git for version control. To clone the repository, type 'git clone https://sd-bitbucket.jhuapl.edu/scm/vis/vistool-web-service.git'
 into your command line tool at the desired path.

@@ -9,8 +9,8 @@ import edu.jhuapl.sd.sig.vistool.vistoolwebservice.model.vistool.concurrentediti
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.repository.vistool.WorkItemRepository;
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.security.SecurityUtilities;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static edu.jhuapl.sd.sig.vistool.vistoolwebservice.repository.vistool.WorkItemRepository.*;
 import static org.springframework.data.jpa.domain.Specification.where;
@@ -40,7 +41,6 @@ public class WorkItemService {
     public List<WorkItem> getAllWorkItems() {
         return this.workItemRepository.findAll();
     }
-
 
     public Optional<WorkItem> getWorkItemById(Long id) {
         return workItemRepository.findOne(
@@ -108,7 +108,7 @@ public class WorkItemService {
                 latestWorkItemInDB = workItems.get(0);
                 latestVersionInDB = latestWorkItemInDB.getVersion();
             }
-            
+
             Long workItemVersion;
             if (latestVersionInDB == null) {
                 workItemVersion = 0L;
@@ -116,6 +116,7 @@ public class WorkItemService {
                 workItemVersion = latestVersionInDB;
                 workItemRepository.delete(latestWorkItemInDB);
             }
+
             workItem.setVersion(++workItemVersion);
             workItem.setModifiedDate(new Date(System.currentTimeMillis()));
 
@@ -132,6 +133,7 @@ public class WorkItemService {
                     publishMessagesToWebSocket(concurrentEditingMessage, WebSocketTopic.WORK_ORDER_SAVED);
                 }
             }
+
             workItem = workItemRepository.save(workItem);
 
             return workItem;
@@ -139,13 +141,12 @@ public class WorkItemService {
     }
 
     public List<WorkItem> saveWorkItems(List<WorkItem> workItems, boolean isUserInitiatedAction) {
-       List<WorkItem> savedWorkItems = new ArrayList<>();
-       for(WorkItem workItem : workItems) {
-           savedWorkItems.add(saveWorkItem(workItem, isUserInitiatedAction));
-       }
-       return savedWorkItems;
-     }
-
+        List<WorkItem> savedWorkItems = new ArrayList<>();
+        for(WorkItem workItem : workItems) {
+            savedWorkItems.add(saveWorkItem(workItem, isUserInitiatedAction));
+        }
+        return savedWorkItems;
+    }
     /**
      * Applies a conflict-aware save for an existing work item by comparing the
      * user's original copy to the current server copy, rejecting overlapping
@@ -183,6 +184,7 @@ public class WorkItemService {
         }
     }
 
+
     /**
      * Processes a batch of conflict-aware save requests, returning both the
      * successfully saved rows and any conflicts so the UI can partially commit
@@ -205,6 +207,19 @@ public class WorkItemService {
         }
 
         return response;
+    }
+
+    public List<String> getChangedFieldsForSaveRequest(WorkItemSaveRequest workItemSaveRequest) {
+        return getChangedFields(
+            workItemSaveRequest.getOriginalWorkItem(),
+            workItemSaveRequest.getWorkItem()
+        )
+            .stream()
+            .filter(field -> !field.equals("id"))
+            .filter(field -> !field.equals("version"))
+            .filter(field -> !field.equals("userId"))
+            .filter(field -> !field.equals("modifiedDate"))
+            .collect(Collectors.toList());
     }
 
     public void deleteWorkItem(WorkItem workItem) {
@@ -257,13 +272,13 @@ public class WorkItemService {
         return conflictingFields;
     }
 
-    private List<String> getChangedFields(WorkItem originalWorkItem, WorkItem updatedWorkItem) {
+    public List<String> getChangedFields(WorkItem originalWorkItem, WorkItem updatedWorkItem) {
         List<String> changedFields = new ArrayList<>();
         collectChangedFields(
-                objectMapper.valueToTree(originalWorkItem),
-                objectMapper.valueToTree(updatedWorkItem),
-                "",
-                changedFields
+            objectMapper.valueToTree(originalWorkItem),
+            objectMapper.valueToTree(updatedWorkItem),
+            "",
+            changedFields
         );
         return changedFields;
     }

@@ -1,6 +1,5 @@
 package edu.jhuapl.sd.sig.vistool.vistoolwebservice.service;
 
-import edu.jhuapl.sd.sig.vistool.vistoolwebservice.model.vistool.VistoolUserRole;
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.model.vistool.VistoolUserRoleAssignment;
 import edu.jhuapl.sd.sig.vistool.vistoolwebservice.repository.vistool.VistoolUserRoleAssignmentRepository;
 import lombok.NonNull;
@@ -13,10 +12,13 @@ import java.util.Optional;
 
 @Service
 public class VistoolUserRoleAssignmentService {
-    @Autowired private VistoolUserRoleAssignmentRepository vistoolUserRoleAssignmentRepository;
+    @Autowired
+    private VistoolUserRoleAssignmentRepository vistoolUserRoleAssignmentRepository;
 
-    public VistoolUserRoleAssignment changeUserRole(String userId, VistoolUserRole vistoolUserRole) {
-        return vistoolUserRoleAssignmentRepository.save(new VistoolUserRoleAssignment(userId, vistoolUserRole.toString()));
+    public VistoolUserRoleAssignment changeUserRole(String userId, String vistoolUserRole) {
+        return vistoolUserRoleAssignmentRepository.save(
+            new VistoolUserRoleAssignment(userId, vistoolUserRole)
+        );
     }
 
     public Optional<VistoolUserRoleAssignment> findOneVistoolUserRoleAssignmentByUserId(@NonNull String userId) {
@@ -27,10 +29,10 @@ public class VistoolUserRoleAssignmentService {
         );
     }
 
-    public List<VistoolUserRoleAssignment> findAllVistoolUserRoleAssignmentsByRole(@NonNull VistoolUserRole vistoolUserRole) {
+    public List<VistoolUserRoleAssignment> findAllVistoolUserRoleAssignmentsByRole(@NonNull String vistoolUserRole) {
         return vistoolUserRoleAssignmentRepository.findAll(
             Specification.where(
-                VistoolUserRoleAssignmentRepository.hasRole(vistoolUserRole.toString())
+                VistoolUserRoleAssignmentRepository.hasRole(vistoolUserRole)
             )
         );
     }

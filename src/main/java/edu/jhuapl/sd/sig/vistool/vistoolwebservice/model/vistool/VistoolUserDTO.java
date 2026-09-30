@@ -19,7 +19,7 @@ public class VistoolUserDTO {
     private String employeeGroup;
     private String officeBuildingNumber;
     private String phoneNumber;
-    private VistoolUserRole vistoolUserRole;
+    private String vistoolUserRole;
 
     public VistoolUserDTO(VistoolUser vistoolUser) {
         this.username = vistoolUser.getUsername();
@@ -33,7 +33,7 @@ public class VistoolUserDTO {
         this.vistoolUserRole = vistoolUser.getVistoolUserRole();
     }
 
-    public VistoolUserDTO(DimHRPerson dimHrPerson, VistoolUserRole vistoolUserRole) {
+    public VistoolUserDTO(DimHRPerson dimHrPerson, String vistoolUserRole) {
         this.username = dimHrPerson.getUserId();
         this.department = dimHrPerson.getDeptID();
         this.displayName = dimHrPerson.getPreferredFullName();
@@ -57,6 +57,5 @@ public class VistoolUserDTO {
         vistoolUser.setPhoneNumber(this.getPhoneNumber());
         vistoolUser.setVistoolUserRole(this.getVistoolUserRole());
         return vistoolUser;
-
     }
 }

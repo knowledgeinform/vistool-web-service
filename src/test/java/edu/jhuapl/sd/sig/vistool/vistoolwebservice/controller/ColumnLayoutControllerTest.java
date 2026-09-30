@@ -52,14 +52,14 @@ public class ColumnLayoutControllerTest {
     private DimHRPerson viewer;
     private DimHRPerson admin;
 
-
-    private DimHRPerson createTestUser(String username, String personId, VistoolUserRole role) {
+    private DimHRPerson createTestUser(String username, String personId, String role) {
         DimHRPerson dimHRPerson = createDimHrPerson(username, personId);
         dimHRPersonRepository.save(dimHRPerson);
 
-        VistoolUserRoleAssignment vistoolUserRoleAssignment = new VistoolUserRoleAssignment(username,
-                role.toString());
+        VistoolUserRoleAssignment vistoolUserRoleAssignment =
+            new VistoolUserRoleAssignment(username, role);
         roleAssignmentRepository.save(vistoolUserRoleAssignment);
+
         return dimHRPerson;
     }
 
@@ -70,8 +70,8 @@ public class ColumnLayoutControllerTest {
         columnLayoutRepository.deleteAll();
 
         // Add users
-        admin = createTestUser("ADMIN-USER", "ADMIN-USER", VistoolUserRole.ADMIN);
-        viewer = createTestUser("USER", "USER", VistoolUserRole.VIEWER);
+        admin = createTestUser("ADMIN-USER", "ADMIN-USER", VistoolUserRole.ADMIN.toString());
+        viewer = createTestUser("USER", "USER", VistoolUserRole.VIEWER.toString());
 
         // Add test column layouts
         columnLayoutRepository.saveAll(List.of(visibleViewer, visibleAdmin, hiddenViewer, hiddenAdmin));
@@ -85,122 +85,167 @@ public class ColumnLayoutControllerTest {
     @Test
     @WithMockUser
     public void testGetColumnLayoutById() throws Exception {
-        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo("ADMIN-USER", VistoolUserRole.ADMIN);
+        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo(
+            "ADMIN-USER",
+            VistoolUserRole.ADMIN.toString()
+        );
+
         int expectedId = visibleViewer.getId().intValue();
+
         mockMvc.perform(MockMvcRequestBuilders.get("/ColumnLayout/Id/" + expectedId)
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(visibleViewer)));
+                .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(visibleViewer)));
     }
 
     @Test
     @WithMockUser
     public void testSaveColumnLayout() throws Exception {
-        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo("USER", VistoolUserRole.VIEWER);
+        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo(
+            "USER",
+            VistoolUserRole.VIEWER.toString()
+        );
+
         ColumnLayout newLayout = new ColumnLayout("ID", "Visible Viewer 2", "JSON", true);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/ColumnLayout")
-                        .with(csrf())
-                        .content(objectMapper.writeValueAsString(newLayout)).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .with(csrf())
+                .content(objectMapper.writeValueAsString(newLayout))
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser
     public void testGetColumnLayoutByUsername() throws Exception {
-        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo("USER", VistoolUserRole.VIEWER);
+        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo(
+            "USER",
+            VistoolUserRole.VIEWER.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.get("/ColumnLayout/User/" + user.getUsername())
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(List.of(visibleViewer, hiddenViewer))));
+                .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(List.of(visibleViewer, hiddenViewer))));
     }
 
     @Test
     @WithMockUser
     public void testGetColumnLayoutByVisibility() throws Exception {
-        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo("ADMIN-USER", VistoolUserRole.ADMIN);
+        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo(
+            "ADMIN-USER",
+            VistoolUserRole.ADMIN.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.get("/ColumnLayout/Visibility/" + false)
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(List.of(hiddenViewer, hiddenAdmin))));
+                .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(List.of(hiddenViewer, hiddenAdmin))));
     }
 
     @Test
     @WithMockUser
     public void testUpdateColumnLayoutName() throws Exception {
-        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo("USER", VistoolUserRole.VIEWER);
+        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo(
+            "USER",
+            VistoolUserRole.VIEWER.toString()
+        );
+
         String expectedName = "New Name";
         long expectedId = visibleViewer.getId();
         visibleViewer.setName(expectedName);
+
         // Update name
         mockMvc.perform(MockMvcRequestBuilders.put("/ColumnLayout/Update/Name")
-                        .with(csrf())
-                        .content(objectMapper.writeValueAsString(visibleViewer)).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .with(csrf())
+                .content(objectMapper.writeValueAsString(visibleViewer))
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+
         // Verify that name updated
         mockMvc.perform(MockMvcRequestBuilders.get("/ColumnLayout/Id/" + expectedId)
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(visibleViewer)));
+                .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(visibleViewer)));
     }
 
     @Test
     @WithMockUser
     public void testUpdateColumnLayoutVisibility() throws Exception {
-        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo("USER", VistoolUserRole.VIEWER);
+        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo(
+            "USER",
+            VistoolUserRole.VIEWER.toString()
+        );
+
         long expectedId = visibleViewer.getId();
         visibleViewer.setVisible(!visibleViewer.isVisible());
+
         // Update name
         mockMvc.perform(MockMvcRequestBuilders.put("/ColumnLayout/Update/Visibility")
-                        .with(csrf())
-                        .content(objectMapper.writeValueAsString(visibleViewer)).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .with(csrf())
+                .content(objectMapper.writeValueAsString(visibleViewer))
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+
         // Verify that visibility updated
         mockMvc.perform(MockMvcRequestBuilders.get("/ColumnLayout/Id/" + expectedId)
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(visibleViewer)));
+                .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(visibleViewer)));
     }
-
 
     @Test
     @WithMockUser
     public void testCannotGetColumnLayoutOfDifferentAuthor() throws Exception {
         // TODO: revert back to status().isUnauthorized once roles are implemented
-        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo("USER", VistoolUserRole.VIEWER);
+        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo(
+            "USER",
+            VistoolUserRole.VIEWER.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.get("/ColumnLayout/User/" + admin.getUserId())
-                        .with(csrf()))
-                .andExpect(status().isOk());
+                .with(csrf()))
+            .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser
     public void testViewerCannotGetPrivateLayouts() throws Exception {
-        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo("USER", VistoolUserRole.VIEWER);
+        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo(
+            "USER",
+            VistoolUserRole.VIEWER.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.get("/ColumnLayout/Visibility/" + false)
-                        .with(csrf()))
-                .andExpect(status().isUnauthorized());
+                .with(csrf()))
+            .andExpect(status().isUnauthorized());
     }
 
     // TODO: disabling as per todo under:
     // @GetMapping(value = "/ColumnLayout/User/{username}")
     // public ResponseEntity<List<ColumnLayout>> getColumnLayoutsByUsername(@PathVariable("username") String username)
 
-//    @Test
-//    @WithMockUser
+    // @Test
+    // @WithMockUser
     public void testAdminGetColumnLayoutOfDifferentAuthor() throws Exception {
-        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo("ADMIN-USER", VistoolUserRole.ADMIN);
+        VistoolUserDTO user = VistoolTestUtilities.setCurrentUserContextTo(
+            "ADMIN-USER",
+            VistoolUserRole.ADMIN.toString()
+        );
+
         mockMvc.perform(MockMvcRequestBuilders.get("/ColumnLayout/User/" + viewer.getUserId())
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(List.of(visibleViewer, hiddenViewer))));
+                .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(List.of(visibleViewer, hiddenViewer))));
     }
 
     @Test
     @WithMockUser
     public void testCannotViewColumnLayoutBeforeAuth() throws Exception {
         long expectedId = visibleViewer.getId();
+
         mockMvc.perform(MockMvcRequestBuilders.get("/ColumnLayout/Id/" + expectedId))
-                .andExpect(status().isForbidden());
+            .andExpect(status().isForbidden());
     }
 
     private DimHRPerson createDimHrPerson(String username, String personID) {

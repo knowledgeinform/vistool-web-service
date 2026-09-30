@@ -134,13 +134,15 @@ public class WorkOrderControllerTest {
         testLinkWorkOrder(VistoolUserRole.EDITOR, "3", true, 404);
     }
 
-    public void testLinkWorkOrder(VistoolUserRole userRole, String workOrderNumber, boolean canLinkWorkOrder, int expectedStatus) throws Exception {
+    public void testLinkWorkOrder(String userRole, String workOrderNumber, boolean canLinkWorkOrder, int expectedStatus) throws Exception {
         DimHRPerson dimHrPerson = new DimHRPerson();
         dimHrPerson.setUserId("USER");
         dimHrPerson.setPersonNumber("USER");
         dimHrPersonRepository.save(dimHrPerson);
-        VistoolUserRoleAssignment vistoolUserRoleAssignment = new VistoolUserRoleAssignment("USER", userRole.toString());
+
+        VistoolUserRoleAssignment vistoolUserRoleAssignment = new VistoolUserRoleAssignment("USER", userRole);
         vistoolUserRoleAssignmentRepository.save(vistoolUserRoleAssignment);
+
         VistoolTestUtilities.setCurrentUserContextTo("USER", userRole);
 
         WorkItem workItem = workItems.get(0);

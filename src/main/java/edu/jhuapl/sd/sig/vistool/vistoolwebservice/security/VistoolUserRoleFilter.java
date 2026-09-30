@@ -21,38 +21,58 @@ import java.util.Optional;
 
 @Component
 public class VistoolUserRoleFilter implements Filter {
-    @Value("${vistool.security.enabled}") private boolean vistoolSecurityEnabled;
-    @Autowired private SecurityUtilities securityUtilities;
-    @Autowired private VistoolUserRoleAssignmentService vistoolUserRoleAssignmentService;
+    @Value("${vistool.security.enabled}")
+    private boolean vistoolSecurityEnabled;
+
+    @Autowired
+    private SecurityUtilities securityUtilities;
+
+    @Autowired
+    private VistoolUserRoleAssignmentService vistoolUserRoleAssignmentService;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if(vistoolSecurityEnabled) {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        if (vistoolSecurityEnabled) {
             Optional<VistoolUser> optionalVistoolUser = securityUtilities.getCurrentUser();
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-            if(optionalVistoolUser.isPresent()) {
+
+            if (optionalVistoolUser.isPresent()) {
                 Optional<VistoolUserRoleAssignment> optionalVistoolUserRoleAssignment =
-                        vistoolUserRoleAssignmentService.findOneVistoolUserRoleAssignmentByUserId(optionalVistoolUser.get().getEmployeeId());
-                VistoolUserRole vistoolUserRole;
-                if(optionalVistoolUserRoleAssignment.isPresent()) {
-                    vistoolUserRole = VistoolUserRole.valueOf(optionalVistoolUserRoleAssignment.get().getRole());
-                }
-                else {
+                    vistoolUserRoleAssignmentService.findOneVistoolUserRoleAssignmentByUserId(
+                        optionalVistoolUser.get().getEmployeeId()
+                    );
+
+                String vistoolUserRole;
+
+                if (optionalVistoolUserRoleAssignment.isPresent()) {
+                    vistoolUserRole = optionalVistoolUserRoleAssignment.get().getRole();
+                } else {
                     vistoolUserRole = VistoolUserRole.VIEWER;
-                    vistoolUserRoleAssignmentService.changeUserRole(optionalVistoolUser.get().getEmployeeId(), vistoolUserRole);
+                    vistoolUserRoleAssignmentService.changeUserRole(
+                        optionalVistoolUser.get().getEmployeeId(),
+                        vistoolUserRole
+                    );
                 }
-                grantedAuthorities.add(new SimpleGrantedAuthority(vistoolUserRole.toString()));
+
+                grantedAuthorities.add(new SimpleGrantedAuthority(vistoolUserRole));
+
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
                     new VistoolUser(
                         optionalVistoolUser.get(),
                         "",
                         grantedAuthorities,
-                        vistoolUserRole),
+                        vistoolUserRole
+                    ),
                     SecurityContextHolder.getContext().getAuthentication().getCredentials(),
-                    grantedAuthorities);
+                    grantedAuthorities
+                );
+
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
+
         chain.doFilter(request, response);
     }
 }

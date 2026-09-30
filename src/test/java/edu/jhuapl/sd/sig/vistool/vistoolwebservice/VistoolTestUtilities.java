@@ -193,14 +193,24 @@ public class VistoolTestUtilities {
         return new ProductionPlanning(true, "productionPlanningNotes", "actionItems");
     }
 
-    public static VistoolUserDTO setCurrentUserContextTo(String username, VistoolUserRole vistoolUserRole) {
-        VistoolUser vistoolUser = new VistoolUser(username, "", List.of(new SimpleGrantedAuthority(vistoolUserRole.toString())), vistoolUserRole);
+    public static VistoolUserDTO setCurrentUserContextTo(String username, String vistoolUserRole) {
+        VistoolUser vistoolUser = new VistoolUser(
+                username,
+                "",
+                List.of(new SimpleGrantedAuthority(vistoolUserRole)),
+                vistoolUserRole
+        );
+
         vistoolUser.setEmployeeId(username);
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 vistoolUser,
                 SecurityContextHolder.getContext().getAuthentication().getCredentials(),
-                List.of(new SimpleGrantedAuthority(vistoolUserRole.toString())));
+                List.of(new SimpleGrantedAuthority(vistoolUserRole))
+        );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         return new VistoolUserDTO(vistoolUser);
     }
 

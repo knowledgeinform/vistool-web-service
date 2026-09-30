@@ -10,7 +10,6 @@ import edu.jhuapl.sd.sig.vistool.vistoolwebservice.util.ScheduledTasks;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -38,7 +37,6 @@ public class VistoolUserRoleFilterTest {
     @Autowired private MockMvc mockMvc;
     @Autowired private VistoolUserRoleAssignmentService vistoolUserRoleAssignmentService;
     @Autowired private VistoolUserRoleAssignmentRepository vistoolUserRoleAssignmentRepository;
-    
 
     @AfterEach
     public void afterEach() {
@@ -48,26 +46,43 @@ public class VistoolUserRoleFilterTest {
     @Test
     @WithMockUser
     public void test() throws Exception {
-        Optional<VistoolUserRoleAssignment> actual = vistoolUserRoleAssignmentService.findOneVistoolUserRoleAssignmentByUserId("USER");
+        Optional<VistoolUserRoleAssignment> actual =
+            vistoolUserRoleAssignmentService.findOneVistoolUserRoleAssignmentByUserId("USER");
+
         Assertions.assertEquals(Optional.empty(), actual);
-        setCurrentUserContextTo("USER", "USER", VistoolUserRole.VIEWER);
+
+        setCurrentUserContextTo("USER", "USER", VistoolUserRole.VIEWER.toString());
+
         mockMvc.perform(MockMvcRequestBuilders.get("/user"))
             .andExpect(status().isOk());
+
         actual = vistoolUserRoleAssignmentService.findOneVistoolUserRoleAssignmentByUserId("USER");
-        Optional<VistoolUserRoleAssignment> expected = Optional.of(new VistoolUserRoleAssignment("USER", VistoolUserRole.VIEWER.toString()));
+
+        Optional<VistoolUserRoleAssignment> expected =
+            Optional.of(new VistoolUserRoleAssignment("USER", VistoolUserRole.VIEWER.toString()));
+
         Assertions.assertEquals(expected, actual);
     }
 
-    private VistoolUserDTO setCurrentUserContextTo(String username, String userId, VistoolUserRole vistoolUserRole) {
-        VistoolUser vistoolUser = new VistoolUser(username, "", List.of(new SimpleGrantedAuthority(vistoolUserRole.toString())), vistoolUserRole);
+    private VistoolUserDTO setCurrentUserContextTo(String username, String userId, String vistoolUserRole) {
+        VistoolUser vistoolUser = new VistoolUser(
+            username,
+            "",
+            List.of(new SimpleGrantedAuthority(vistoolUserRole)),
+            vistoolUserRole
+        );
+
         vistoolUser.setEmployeeId(userId);
         vistoolUserRoleAssignmentService.changeUserRole(vistoolUser.getUsername(), vistoolUserRole);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                vistoolUser,
-                SecurityContextHolder.getContext().getAuthentication().getCredentials(),
-                List.of(new SimpleGrantedAuthority(vistoolUserRole.toString())));
+            vistoolUser,
+            SecurityContextHolder.getContext().getAuthentication().getCredentials(),
+            List.of(new SimpleGrantedAuthority(vistoolUserRole))
+        );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         return new VistoolUserDTO(vistoolUser);
     }
 }

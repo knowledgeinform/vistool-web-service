@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public final class VistoolUtilities {
     private VistoolUtilities(){}
 
-    @Autowired private static ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private static ObjectMapper objectMapper = new ObjectMapper();
+
     public final static Gson GSON = new GsonBuilder().serializeNulls().create();
 
     public final static String MONTH_DAY_YEAR_FORMAT = "MM/dd/yyyy";
@@ -30,9 +32,7 @@ public final class VistoolUtilities {
     public final static SimpleDateFormat YEAR_MONTH_DAY_HOUR_MINUTE_SECOND_MILLISECOND_DATE_FORMAT = new SimpleDateFormat(YEAR_MONTH_DAY_HOUR_MINUTE_SECOND_MILLISECOND_FORMAT);
 
     public static boolean isStringNullOrEmpty(String string) {
-        if(string == null || string.length() == 0)
-            return true;
-        return false;
+        return string == null || string.length() == 0;
     }
 
     public static VistoolUser getCurrentUser(SecurityUtilities securityUtilities) {
@@ -45,14 +45,15 @@ public final class VistoolUtilities {
 
     public static boolean currentUserIsAdmin(VistoolUser vistoolUser) {
         if (vistoolUser != null) {
-            return vistoolUser.getVistoolUserRole().equals(VistoolUserRole.ADMIN);
+            return VistoolUserRole.ADMIN.equals(vistoolUser.getVistoolUserRole());
         }
         return false;
     }
 
     public static boolean currentUserCanEdit(VistoolUser vistoolUser) {
         if (vistoolUser != null) {
-            return vistoolUser.getVistoolUserRole().equals(VistoolUserRole.ADMIN) || vistoolUser.getVistoolUserRole().equals(VistoolUserRole.EDITOR);
+            return VistoolUserRole.ADMIN.equals(vistoolUser.getVistoolUserRole())
+                || VistoolUserRole.EDITOR.equals(vistoolUser.getVistoolUserRole());
         }
         return false;
     }

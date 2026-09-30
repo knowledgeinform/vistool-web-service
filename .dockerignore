@@ -1,0 +1,7 @@
+docker/mysql_data/
+docker/mysql_data/**
+mysql_data/
+**/mysql.sock
+**/*.sock
+target/
+.git/

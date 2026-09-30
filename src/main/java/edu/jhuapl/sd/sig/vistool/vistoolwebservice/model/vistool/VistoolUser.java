@@ -17,24 +17,24 @@ public class VistoolUser extends User implements Serializable {
     private String employeeGroup;
     private String officeBuildingNumber;
     private String phoneNumber;
-    private VistoolUserRole vistoolUserRole;
+    private String vistoolUserRole;
     private VistoolUserAccountType accountType = VistoolUserAccountType.USER;
 
     public VistoolUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.username = username;
-        vistoolUserRole = VistoolUserRole.VIEWER;
+        this.vistoolUserRole = VistoolUserRole.VIEWER;
     }
 
     public VistoolUser(String username, String password, Collection<? extends GrantedAuthority> authorities,
-                       VistoolUserRole vistoolUserRole) {
+                       String vistoolUserRole) {
         super(username, password, authorities);
         this.username = username;
         this.vistoolUserRole = vistoolUserRole;
     }
 
     public VistoolUser(VistoolUser vistoolUser, String password, Collection<? extends GrantedAuthority> authorities,
-                       VistoolUserRole vistoolUserRole) {
+                       String vistoolUserRole) {
         super(vistoolUser.getUsername(), password, authorities);
         this.username = vistoolUser.getUsername();
         this.department = vistoolUser.getDepartment();
